@@ -1,17 +1,17 @@
-const initialState={
-rates:[]
-}
+const initialState = {
+  rates: []
+};
 
-const ConvertReducer=(state=initialState,action)=>{
-    console.log(action,'actionnnnnnnn')
-    switch(action.type){
-        case'CONVERT_SUCCESS':
-            return{
-                ...state,
-                rates: action.payload,
-            }
-    }
-    return state
-}
+const ConvertReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case "CONVERT_SUCCESS":
+      return {
+        ...state,
+        rates: action.payload
+      };
+      default:
+  }
+  return state;
+};
 
 export default ConvertReducer;
