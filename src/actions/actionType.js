@@ -1,0 +1,2 @@
+export const CONVERT='CONVERT'
+export const CONVERT_SUCCESS='CONVERT_SUCCESS'
