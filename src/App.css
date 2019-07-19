@@ -13,3 +13,7 @@ body{
 .btn{
   width:20vw;
 }
+
+.error{
+  color:red;
+}
