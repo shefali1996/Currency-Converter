@@ -28,15 +28,16 @@ class CurrencyConverter extends Component {
 
   swap = () => {
     this.setState({
-      from: this.state.to.toUpperCase(),
-      to: this.state.from.toUpperCase()
+      from: this.state.to,
+      to: this.state.from
     });
+
+    this.props.convert(this.state.to);
   };
 
   render() {
-    const { from, to, amount} = this.state;
+    const { from, to, amount } = this.state;
     return (
-      
       <div>
         <Container>
           <h1 className="header">
@@ -75,12 +76,16 @@ class CurrencyConverter extends Component {
                   type="text"
                   placeholder="To"
                   name="to"
-                  pattern="[A-Z]{3}"
-                  title="Enter Three letter country code"
                   value={to}
                   maxLength={3}
                   onChange={e => this.onChangeHandle(e)}
                 />
+                <div className="error">
+                  {this.props.status === 200 &&
+                  (this.props.rates && !this.props.rates[this.state.to])
+                    ? "Please Enter a Valid Currency Code!"
+                    : ""}
+                </div>
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -102,19 +107,16 @@ class CurrencyConverter extends Component {
                 Result
               </Form.Label>
               <Col sm={10}>
-                {console.log(this.props.rates && this.props.rates[this.state.to])}
-                
                 <Form.Control
                   type="number"
                   name="result"
                   placeholder="Result"
                   readOnly
-                  
-                  
-                  value={this.props.rates && this.props.rates[this.state.to]?this.props.rates[this.state.to] * this.state.amount:'result not found'}
+                  value={
+                    this.props.rates && this.props.rates[this.state.to] * this.state.amount
+                  }
                   onChange={e => this.onChangeHandle(e)}
                 />
-                <div className='error'>{this.props.status===200 && (this.props.rates && !this.props.rates[this.state.to])?'Please Enter a Valid Currency Code!':''}</div>
               </Col>
             </Form.Group>
             <Form.Group as={Row} controlId="formHorizontalEmail">
@@ -138,7 +140,7 @@ class CurrencyConverter extends Component {
 const mapStateToProps = state => {
   return {
     rates: state.ConvertReducer.rates,
-    status:state.ConvertReducer.status
+    status: state.ConvertReducer.status
   };
 };
 
